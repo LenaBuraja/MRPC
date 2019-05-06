@@ -10,40 +10,37 @@
 	</div>
 </template>
 
-<script>
-	export default {
-		el: '#signin',
-		name: 'Signin',
-		data() {
-			return {
-				userName: '',
-				password: '',
-				repeatPassword: '',
-				passwordFieldType: false,
-				repeatPasswordFieldType: false
-			}
-		},
-		methods: {
-			setUserName: function(event){
-      			this.userName = event.target.value;
-      		},
-			setPassword: function(event){
-    			this.password = event.target.value;
-    		},
-			registration: function(){
-				console.log(this.userName)
-				console.log(this.password)
-				console.log(this.repeatPassword)
-			},
-			switchVisibility() {
-				console.log(this.passwordFieldType)
-    			this.passwordFieldType = !this.passwordFieldType
-    		},
-			switchVisibility1() {
-				console.log(this.repeatPasswordFieldType)
-    		  this.repeatPasswordFieldType = !this.repeatPasswordFieldType
-    		}
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component'
+
+	@Component({})
+	export default class Signin extends Vue {
+		userName: string = '';
+		password: string = '';
+		repeatPassword: string = '';
+		passwordFieldType: boolean = false;
+		repeatPasswordFieldType: boolean = false;
+
+		setUserName(event: any) {
+     		this.userName = event.target.value;
+     	}
+		setPassword(event: any) {
+   			this.password = event.target.value;
+   		}
+		registration() {
+			console.log(this.userName)
+			console.log(this.password)
+			console.log(this.repeatPassword)
 		}
+		switchVisibility() {
+			console.log(this.passwordFieldType)
+   			this.passwordFieldType = !this.passwordFieldType
+   		}
+		switchVisibility1() {
+			console.log(this.repeatPasswordFieldType)
+   			this.repeatPasswordFieldType = !this.repeatPasswordFieldType
+   		}
 	}
 </script>
 

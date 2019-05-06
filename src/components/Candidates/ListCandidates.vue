@@ -1,6 +1,6 @@
 <template>
   <div id="candidates">
-  <div>Candidates</div>
+  	<div>Candidates</div>
 		<div class="data" v-for="candidate in data" v-bind:key="candidate.id">
 			<div>{{ candidate.id }}</div>
 			<div>{{ getFullName(candidate.personId) }}</div>
@@ -16,33 +16,35 @@
 	</div>
 </template>
 
-<script>
-import {Data_Candidates} from '../../data/candidates';
-import {Data_People} from '../../data/people';
-import {Data_Statuses} from '../../data/statuses';
-import {Data_Positions} from '../../data/positions';
-import {Data_Answers} from '../../data/answers';
+<script lang="ts">
+	import Vue from 'vue'
+	import Component from 'vue-class-component'
+	import {Data_Candidates} from '../../data/candidates';
+	import {Data_People} from '../../data/people';
+	import {Data_Statuses} from '../../data/statuses';
+	import {Data_Positions} from '../../data/positions';
+	import {Data_Answers} from '../../data/answers';
 
-	export default {
-		el: '#candidates',
-		name: 'ListCandidates',
-		data() {
-			return {
-				data: Data_Candidates,
-				people: Data_People,
-				statuses: Data_Statuses,
-				positions: Data_Positions,
-				answers: Data_Answers
-			}
-		},
-		methods: {
-			getFullName(id) {
-				const human = this.getHuman(id);
-				return human ? `${human.lastName} ${human.firstName} ${human.MiddleName}` : '';
-			},
-			getHuman(id) {
-				return this.people.find(item => item.id === id);
-			}
+	import Candidate from '../../types/Candidate';
+	import Human from '../../types/Human';
+	import Status from '../../types/Status';
+	import Position from '../../types/Position';
+	import Answer from '../../types/Answer';
+
+	@Component({})
+	export default class ListCandidates extends Vue {
+		data: Candidate[] = Data_Candidates;
+		people: Human[] = Data_People;
+		statuses: Status[] = Data_Statuses;
+		positions: Position[] = Data_Positions;
+		answers: Answer[] = Data_Answers;
+
+		getFullName(id: number) {
+			const human = this.getHuman(id);
+			return human ? `${human.lastName} ${human.firstName} ${human.MiddleName}` : '';
+		}
+		getHuman(id: number) {
+			return this.people.find(item => item.id === id);
 		}
 	}
 </script>

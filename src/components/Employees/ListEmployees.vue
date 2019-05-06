@@ -13,26 +13,26 @@
   </div>
 </template>
 
-<script>
-import {Data_Employees} from '../../data/employees';
-import {Data_People} from '../../data/people';
-import {Data_Positions} from '../../data/positions';
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component'
 
-	export default {
-		el: '#employees',
-		name: 'ListEmployees',
-		data() {
-			return {
-				data: Data_Employees,
-				people: Data_People,
-				positions: Data_Positions
-			}
-		},
-		methods: {
-			getHuman(id) {
+	import {Data_Employees} from '../../data/employees';
+	import {Data_People} from '../../data/people';
+	import {Data_Positions} from '../../data/positions';
+	import Employee from '../../types/Employee';
+	import Position from '../../types/Position';
+	import Human from 'src/types/Human';
+
+	@Component({})
+	export default class ListEmployees extends Vue {
+		data: Employee[] = Data_Employees;
+		people: Human[] = Data_People;
+		positions: Position[] = Data_Positions;
+
+			getHuman(id: number) {
 				return this.people.find(human => human.id === id);
 			}
-		}
 	}
 </script>
 

@@ -9,25 +9,26 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component';
+	import { Watch, Prop } from 'vue-property-decorator';
+
 	import {Data_Comments} from '../../data/comments';
 	import {Data_Users} from '../../data/users';
+	
+	import Comment from '../../types/Comment';
+	import User from '../../types/User';
 
-
-	export default {
-		el: '#comments',
-		name: 'Comments',
-		props: ['id'],
-		data() {
-			return {
-				comments: Data_Comments.filter( comment => comment.candiadteId === Number(this.id)),
-				users: Data_Users
-			}
-		},
-		watch: {
-    		'id': function(newId) {
-				return this.comments = Data_Comments.filter( comment => comment.candiadteId === Number(newId));
-			}
+	@Component({})
+	export default class Comments extends Vue {
+		@Prop(Number) readonly id!: number;
+		comments: Comment[] = Data_Comments.filter( comment => comment.candiadteId === Number(this.id));
+		users: User[] = Data_Users
+		
+		@Watch('id') onCandidateIdChanged(value: number, oldValue: number) {
+			console.log(value)
+			return this.comments = Data_Comments.filter( comment => comment.candiadteId === value);
 		}
 	}
 </script>

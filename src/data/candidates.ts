@@ -1,0 +1,7 @@
+export const Data_Candidates = [
+	{id:0, personId:9, employId:1, statusId:1, ConnectionId:0, commingId:0, dateInterview:undefined, decisionTime:undefined, AnswerId:undefined, TitleFileCV:undefined, TitleFileWS:undefined, TitleFileT:undefined, TechnicalSpecial:undefined},
+	{id:1, personId:13, employId:1, statusId:0, ConnectionId:1, commingId:1, dateInterview:undefined, decisionTime:undefined, AnswerId:undefined, TitleFileCV:undefined, TitleFileWS:undefined, TitleFileT:undefined, TechnicalSpecial:undefined},
+	{id:2, personId:6, employId:1, statusId:0, ConnectionId:0, commingId:0, dateInterview:undefined, decisionTime:undefined, AnswerId:undefined, TitleFileCV:undefined, TitleFileWS:undefined, TitleFileT:undefined, TechnicalSpecial:undefined},
+	{id:3, personId:11, employId:1, statusId:4, ConnectionId:0, commingId:0, dateInterview:undefined, decisionTime:undefined, AnswerId:undefined, TitleFileCV:undefined, TitleFileWS:undefined, TitleFileT:undefined, TechnicalSpecial:undefined},
+	{id:4, personId:10, employId:1, statusId:2, ConnectionId:1, commingId:1, dateInterview:undefined, decisionTime:undefined, AnswerId:undefined, TitleFileCV:undefined, TitleFileWS:undefined, TitleFileT:undefined, TechnicalSpecial:undefined},
+];

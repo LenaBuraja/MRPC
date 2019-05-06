@@ -8,33 +8,30 @@
 	</div>
 </template>
 
-<script>
-	export default {
-		el: '#login',
-		name: 'Login',
-		data() {
-			return {
-				userName: '',
-				password: '123',
-				passwordFieldType: false
-			}
-		},
-		methods: {
-			setUserName: function(event){
-        this.userName = event.target.value;
-      },
-			setPassword: function(event){
-        this.password = event.target.value;
-      },
-			login: function(){
-				console.log(this.userName)
-				console.log(this.password)
-			},
-			switchVisibility() {
-				console.log(this.passwordFieldType)
-    	  this.passwordFieldType = !this.passwordFieldType
-    	}
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component'
+
+	@Component({})
+	export default class Login extends Vue {
+		userName: string = '';
+		password: string = '';
+		passwordFieldType: boolean = false;
+
+		setUserName(event: any) {
+      this.userName = event.target.value;
+    }
+		setPassword(event: any) {
+      this.password = event.target.value;
+    }
+		login() {
+			console.log(this.userName)
+			console.log(this.password)
 		}
+		switchVisibility() {
+			console.log(this.passwordFieldType)
+      this.passwordFieldType = !this.passwordFieldType
+    }
 	}
 </script>
 

@@ -14,27 +14,31 @@
   </div>
 </template>
 
-<script>
-import {Data_Users} from '../../data/users';
-import {Data_Employees} from '../../data/employees';
-import {Data_People} from '../../data/people';
-import {Data_Positions} from '../../data/positions';
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component'
 
-	export default {
-		el: '#users',
-		name: 'ListUsers',
-		data() {
-			return {
-				data: Data_Users,
-				employees: Data_Employees,
-				people: Data_People,
-				positions: Data_Positions
-			}
-		},
-		methods: {
-			getHuman(id) {
-				return this.people.find(human => human.id === this.employees.find(employee => employee.id === id).personId);
-			}
+	import {Data_Users} from '../../data/users';
+	import {Data_Employees} from '../../data/employees';
+	import {Data_People} from '../../data/people';
+	import {Data_Positions} from '../../data/positions';
+	import Employee from 'src/types/Employee';
+	import Human from 'src/types/Human';
+	import User from 'src/types/User';
+	import Position from 'src/types/Position';
+
+	@Component({})
+	export default class ListUsers extends Vue {
+		data: User[] = Data_Users;
+		employees: Employee[] = Data_Employees;
+		people: Human[] = Data_People;
+		positions: Position[] = Data_Positions;
+
+		getHuman(id: number) {
+			return this.people.find(human => {
+				const employee = this.employees.find(employee => employee.id === id);
+				return employee ? human.id === employee.personId : false;
+			});
 		}
 	}
 </script>

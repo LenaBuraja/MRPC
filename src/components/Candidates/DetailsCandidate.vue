@@ -1,7 +1,8 @@
 <template>
 	<div id='detailsCandidate'>
+		{{getCandidate()}}
 		<div>Details candidate {{ $route.params.id }}</div>
-		<div class="details">
+		<div v-if="candidate" class="details">
 			<div>
 				<div>{{getFullName(candidate.personId)}}</div>
 				<div>{{positions.find(position => position.id === getHuman(candidate.personId).positionsID).titlePosition}}</div>
@@ -23,12 +24,17 @@
 				<div> {{candidate.TitleFileWS}} </div>
 				<div> {{candidate.TitleFileT}} </div>
 			</div>
-			<comments :id='$route.params.id'></comments>
+			<Comments :id='candidate.id'></Comments>
 		</div>
+		<div v-else>Not found</div>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+	import Vue from 'vue';
+	import Component from 'vue-class-component'
+	import { Watch } from 'vue-property-decorator';
+
 	import {Data_Candidates} from '../../data/candidates';
 	import {Data_People} from '../../data/people';
 	import {Data_Positions} from '../../data/positions';
@@ -38,37 +44,40 @@
 	import {Data_Connections} from '../../data/connections';
 	import Comments from './Comments.vue'
 
-	export default {
-		el: '#detailsCandidate',
-		name: 'DetailsCandidate',
-		data() {
-			return {
-				candidate: Data_Candidates.find(item => item.id === Number(this.$route.params.id)),
-				people: Data_People,
-				statuses: Data_Statuses,
-				positions: Data_Positions,
-				answers: Data_Answers,
-				comings: Data_Comings,
-				connections: Data_Connections
-			}
-		},
-		components: {
-			'comments': Comments
-		},
-		watch: {
-    		'$route.params.id': function(newId) {
-				console.log(newId)
-				return this.candidate = Data_Candidates.find(item => item.id === Number(newId));
-			}
-		},
-		methods: {
-			getFullName(id) {
-				const human = this.getHuman(id);
-				return human ? `${human.lastName} ${human.firstName} ${human.MiddleName}` : '';
-			},
-			getHuman(id) {
-				return this.people.find(item => item.id === id);
-			}
+	import Candidate from '../../types/Candidate';
+	import Human from '../../types/Human';
+	import Position from '../../types/Position';
+	import Status from '../../types/Status';
+	import Answer from '../../types/Answer';
+	import Coming from '../../types/Coming';
+	import Connection from '../../types/Connection';
+
+	@Component({
+		components: {Comments}
+	})
+	export default class DetailsCandidate extends Vue {
+		candidate: Candidate | undefined;
+		people: Human[] = Data_People;
+		statuses: Status[] = Data_Statuses;
+		positions: Position[] = Data_Positions;
+		answers: Answer[] = Data_Answers;
+		comings: Coming[] = Data_Comings;
+		connections: Connection[] = Data_Connections;
+
+		@Watch('$route.params.id') onCandidateChanged(value: string, oldValue: string) {
+			return this.candidate = Data_Candidates.find(item => item.id === Number(value));
+		}
+
+		getCandidate() {
+			this.candidate = Data_Candidates.find(item => item.id === Number(this.$route.params.id));
+		}
+
+		getFullName(id: number) {
+			const human = this.getHuman(id);
+			return human ? `${human.lastName} ${human.firstName} ${human.MiddleName}` : '';
+		}
+		getHuman(id: number) {
+			return this.people.find(item => item.id === id);
 		}
 	}
 </script>
