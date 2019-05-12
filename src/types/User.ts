@@ -1,4 +1,4 @@
-export default class Status {
+export default class User {
 	constructor(
 		public id: number,
 		public employeeId: number,
