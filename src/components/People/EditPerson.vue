@@ -1,6 +1,6 @@
 <template>
 <div>
-		<button v-if="!calledFromList" id="show-modal" @click="showModal = true">Show Modal</button>
+		<button v-if="!calledFromList" id="show-modal" @click="showModal = true">Edit person</button>
 		<div v-if="calledFromList"><img src="../../assets/img/edit.png" @click="showModal = true" /></div>
 
 		<modal v-if="showModal" @close="showModal = false" class="modal-mask">
