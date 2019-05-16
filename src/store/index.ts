@@ -21,10 +21,13 @@ import Comment from '../types/Comment';
 import Status from '../types/Status';
 import Coming from '../types/Coming';
 import Connection from '../types/Connection';
+import getters from './getters';
+import mutations from './mutations';
+import actions from './actions';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store<RootState>({
+const store = new Vuex.Store<RootState>({
     state: {
 			dataBase: {
 				users: Data_Users as User[],
@@ -46,6 +49,14 @@ export default new Vuex.Store<RootState>({
 			},
 			candidateState: {
 				currCandidate: undefined
+			},
+			personState: {
+				currPerson: undefined
 			}
-		}
+		},
+		getters,
+		actions,
+		mutations
 });
+
+export default store;

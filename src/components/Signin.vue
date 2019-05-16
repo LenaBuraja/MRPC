@@ -1,51 +1,50 @@
 <template>
-  <div id="signin">
+  <div id="sign_in">
     <div>Login</div>
 		<input type="text" v-model="userName" />
 		<input :type="passwordFieldType ? 'text' : 'password'" v-model="password" />
-  		<button @click="switchVisibility">show / hide</button>
-		<input :type="repeatPasswordFieldType ? 'text' : 'password'" v-model="repeatPassword" />
-  		<button @click="switchVisibility1">show / hide</button>
-		<button @click="registration">Login</button>
+  	<button @click="switchVisibility">show / hide</button>
+		<button @click="sign_in">Login</button>
 	</div>
 </template>
 
 <script lang="ts">
 	import Vue from 'vue';
 	import Component from 'vue-class-component'
+	import API from '../api'
+	import axios from 'axios'
+	import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios, axios)
 
 	@Component({})
-	export default class Signin extends Vue {
+	export default class SignIn extends Vue {
 		userName: string = '';
 		password: string = '';
-		repeatPassword: string = '';
 		passwordFieldType: boolean = false;
-		repeatPasswordFieldType: boolean = false;
 
 		setUserName(event: any) {
-     		this.userName = event.target.value;
-     	}
+      this.userName = event.target.value;
+    }
 		setPassword(event: any) {
-   			this.password = event.target.value;
-   		}
-		registration() {
-			console.log(this.userName)
-			console.log(this.password)
-			console.log(this.repeatPassword)
+      this.password = event.target.value;
+    }
+		sign_in() {
+			console.log(this.userName);
+			console.log(this.password);
+
+			let data = (new API()).sign_in();
+			console.log(data)
 		}
 		switchVisibility() {
 			console.log(this.passwordFieldType)
-   			this.passwordFieldType = !this.passwordFieldType
-   		}
-		switchVisibility1() {
-			console.log(this.repeatPasswordFieldType)
-   			this.repeatPasswordFieldType = !this.repeatPasswordFieldType
-   		}
+      this.passwordFieldType = !this.passwordFieldType
+    }
 	}
 </script>
 
 <style>
-	#signin {
+	#login {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;

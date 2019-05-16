@@ -1,7 +1,7 @@
 <template>
   <div id="users">
     <div>Users</div>
-		<div class="data" v-for="user in data" v-bind:key="user.id">
+		<div class="data" v-for="user in users" v-bind:key="user.id">
 		<div>{{ user.id }}</div>
 		<div>{{ user.login }}</div>
 		<div>{{ getHuman(user.employeeId).lastName }} {{ getHuman(user.employeeId).firstName }} {{ getHuman(user.employeeId).MiddleName }}</div>
@@ -17,22 +17,20 @@
 <script lang="ts">
 	import Vue from 'vue';
 	import Component from 'vue-class-component'
+	import { State, Action, Getter } from "vuex-class"
 
-	import {Data_Users} from '../../data/users';
-	import {Data_Employees} from '../../data/employees';
-	import {Data_People} from '../../data/people';
-	import {Data_Positions} from '../../data/positions';
-	import Employee from 'src/types/Employee';
-	import Human from 'src/types/Human';
-	import User from 'src/types/User';
-	import Position from 'src/types/Position';
+	import Employee from '../../types/Employee';
+	import Human from '../../types/Human';
+	import User from '../../types/User';
+	import Position from '../../types/Position';
+	import {RootState} from '../../store/types'
 
 	@Component({})
 	export default class ListUsers extends Vue {
-		data: User[] = Data_Users;
-		employees: Employee[] = Data_Employees;
-		people: Human[] = Data_People;
-		positions: Position[] = Data_Positions;
+		@State(state => state.dataBase.users) users!: User[];
+		@State(state => state.dataBase.employees) employees!: Employee[];
+		@State(state => state.dataBase.people) people!: Human[];
+		@State(state => state.dataBase.positions) positions!: Position[];
 
 		getHuman(id: number) {
 			return this.people.find(human => {

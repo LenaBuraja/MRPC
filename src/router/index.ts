@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../components/Login.vue'
-import Signin from '../components/Signin.vue'
+import SignUp from '../components/SignUp.vue'
+import SignIn from '../components/Signin.vue'
 import ListEmployees from '../components/Employees/ListEmployees.vue'
 import ListCandidates from '../components/Candidates/ListCandidates.vue'
 import ListUsers from '../components/Users/ListUsers.vue'
 import DetailsCandidate from '../components/Candidates/DetailsCandidate.vue'
 import DetailsEmployee from '../components/Employees/DetailsEmployee.vue'
+import NewPerson from '../components/People/AddPerson.vue'
 
 Vue.use(Router)
 
@@ -33,14 +34,14 @@ export default new Router({
       component: ListUsers
     },
     {
-      path: '/Login',
-      name: 'Login',
-      component: Login
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUp
     },
     {
-      path: '/Signin',
-      name: 'Signin',
-      component: Signin
+      path: '/sign-in',
+      name: 'SignIn',
+      component: SignIn
     },
     {
       path: '/DetailsCandidate/:id',
@@ -51,6 +52,11 @@ export default new Router({
       path: '/DetailsEmployee/:id',
       name: 'DetailsEmployee',
       component: DetailsEmployee
+    },
+    {
+      path: '/NewPerson',
+      name: 'NewPerson',
+      component: NewPerson
     }
   ]
 })

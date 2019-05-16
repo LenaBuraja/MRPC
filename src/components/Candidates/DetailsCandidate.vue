@@ -2,6 +2,8 @@
 	<div id='detailsCandidate'>
 		{{getCandidate()}}
 		<div>Details candidate {{ $route.params.id }}</div>
+		<EditPerson />
+		<button @click="auth_me">Auth/me</button>
 		<div v-if="candidate" class="details">
 			<div>
 				<div>{{getFullName(candidate.personId)}}</div>
@@ -34,15 +36,12 @@
 	import Vue from 'vue';
 	import Component from 'vue-class-component'
 	import { Watch } from 'vue-property-decorator';
+	import { State, Action, Getter } from "vuex-class"
+
 
 	import {Data_Candidates} from '../../data/candidates';
-	import {Data_People} from '../../data/people';
-	import {Data_Positions} from '../../data/positions';
-	import {Data_Statuses} from '../../data/statuses';
-	import {Data_Answers} from '../../data/answers';
-	import {Data_Comings} from '../../data/commings';
-	import {Data_Connections} from '../../data/connections';
 	import Comments from './Comments.vue'
+	import EditPerson from '../People/EditPerson.vue'
 
 	import Candidate from '../../types/Candidate';
 	import Human from '../../types/Human';
@@ -52,17 +51,22 @@
 	import Coming from '../../types/Coming';
 	import Connection from '../../types/Connection';
 
+	import API from '../../api'
+
 	@Component({
-		components: {Comments}
+		components: {Comments, EditPerson}
 	})
 	export default class DetailsCandidate extends Vue {
-		candidate: Candidate | undefined;
-		people: Human[] = Data_People;
-		statuses: Status[] = Data_Statuses;
-		positions: Position[] = Data_Positions;
-		answers: Answer[] = Data_Answers;
-		comings: Coming[] = Data_Comings;
-		connections: Connection[] = Data_Connections;
+		@State(state => state.dataBase.candidates) candidates!: Candidate[];
+		@State(state => state.dataBase.statuses) statuses!: Status[];
+		@State(state => state.dataBase.people) people!: Human[];
+		@State(state => state.dataBase.positions) positions!: Position[];
+		@State(state => state.dataBase.answers) answers!: Answer[];
+		@State(state => state.dataBase.comings) comings!: Coming[];
+		@State(state => state.dataBase.connections) connections!: Connection[];
+
+		showModal: boolean = false;
+		candidate?: Candidate;
 
 		@Watch('$route.params.id') onCandidateChanged(value: string, oldValue: string) {
 			return this.candidate = Data_Candidates.find(item => item.id === Number(value));
@@ -79,6 +83,14 @@
 		getHuman(id: number) {
 			return this.people.find(item => item.id === id);
 		}
+		saveChangeHuman() {
+			
+			this.showModal = false;
+		}
+		auth_me() {
+			const res = (new API()).auth_me();
+			console.log(res)
+		}
 	}
 </script>
 
@@ -94,5 +106,43 @@
 
 	.details {
 		display: flex;
+	}
+
+	.details > * {
+		flex-grow: 1;
+	}
+
+	.modal-mask {
+		position: fixed;
+		z-index: 9998;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, .5);
+    	display: flex;
+		transition: opacity .3s ease;
+		align-items: center;
+		align-content: center; 
+		justify-content: center; 
+		overflow: auto;  
+	}
+
+	.modal-container {
+		width: 300px;
+		margin: 0px auto;
+		padding: 20px 30px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+		transition: all .3s ease;
+		font-family: Helvetica, Arial, sans-serif;
+		display: block;
+        border: none;
+	}
+
+	.modal-header {
+		margin-top: 0;
+		color: #42b983;
 	}
 </style>

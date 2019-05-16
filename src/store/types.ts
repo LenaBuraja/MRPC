@@ -32,10 +32,8 @@ export interface RootState {
 	},
 	candidateState: {
 		currCandidate: Candidate | undefined
+	},
+	personState: {
+		currPerson: Human | undefined
 	}
 }
-/*
-export interface RootState {
-	dataState: IBaseState
-}
-*/

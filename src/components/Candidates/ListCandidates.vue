@@ -1,7 +1,7 @@
 <template>
   <div id="candidates">
   	<div>Candidates</div>
-		<div class="data" v-for="candidate in data" v-bind:key="candidate.id">
+		<div class="data" v-for="candidate in candidates" v-bind:key="candidate.id">
 			<div>{{ candidate.id }}</div>
 			<div>{{ getFullName(candidate.personId) }}</div>
 			<div>{{ getFullName(candidate.employId) }}</div>
@@ -19,11 +19,7 @@
 <script lang="ts">
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import {Data_Candidates} from '../../data/candidates';
-	import {Data_People} from '../../data/people';
-	import {Data_Statuses} from '../../data/statuses';
-	import {Data_Positions} from '../../data/positions';
-	import {Data_Answers} from '../../data/answers';
+	import { State, Action, Getter } from "vuex-class"
 
 	import Candidate from '../../types/Candidate';
 	import Human from '../../types/Human';
@@ -33,11 +29,11 @@
 
 	@Component({})
 	export default class ListCandidates extends Vue {
-		data: Candidate[] = Data_Candidates;
-		people: Human[] = Data_People;
-		statuses: Status[] = Data_Statuses;
-		positions: Position[] = Data_Positions;
-		answers: Answer[] = Data_Answers;
+		@State(state => state.dataBase.candidates) candidates!: Candidate[];
+		@State(state => state.dataBase.statuses) statuses!: Status[];
+		@State(state => state.dataBase.people) people!: Human[];
+		@State(state => state.dataBase.positions) positions!: Position[];
+		@State(state => state.dataBase.answers) answers!: Answer[];
 
 		getFullName(id: number) {
 			const human = this.getHuman(id);

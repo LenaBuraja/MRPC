@@ -1,7 +1,7 @@
 <template>
   <div id="employees">
     <div>Employees</div>
-	<div class="data" v-for="employee in data" v-bind:key="employee.id">
+	<div class="data" v-for="employee in employees" v-bind:key="employee.id">
 		<div>{{ employee.id }}</div>
 		<div>{{ people.find(human => human.id === employee.personId).lastName }} {{ people.find(human => human.id === employee.personId).firstName }} {{ people.find(human => human.id === employee.personId).MiddleName }}</div>
 		<div>{{ positions.find(position => position.id === people.find(human => human.id === employee.personId).positionsID).titlePosition }}</div>
@@ -16,6 +16,7 @@
 <script lang="ts">
 	import Vue from 'vue';
 	import Component from 'vue-class-component'
+	import { State, Action, Getter } from "vuex-class"
 
 	import {Data_Employees} from '../../data/employees';
 	import {Data_People} from '../../data/people';
@@ -26,13 +27,13 @@
 
 	@Component({})
 	export default class ListEmployees extends Vue {
-		data: Employee[] = Data_Employees;
-		people: Human[] = Data_People;
-		positions: Position[] = Data_Positions;
+		@State(state => state.dataBase.employees) employees!: Employee[];
+		@State(state => state.dataBase.people) people!: Human[];
+		@State(state => state.dataBase.positions) positions!: Position[];
 
-			getHuman(id: number) {
-				return this.people.find(human => human.id === id);
-			}
+		getHuman(id: number) {
+			return this.people.find(human => human.id === id);
+		}
 	}
 </script>
 

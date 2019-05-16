@@ -2,6 +2,7 @@
 	<div id='detailsEmployee'>
 		{{getEmployee()}}
 		<div>Details employee {{ $route.params.id }}</div>
+		<EditPerson />
 		<div v-if="employee" class="details">
 			<div>{{getFullName(employee.personId)}}</div>
 			<div>{{positions.find(position => position.id === getHuman(employee.personId).positionsID).titlePosition}}</div>
@@ -28,8 +29,14 @@
 	import Employee from '../../types/Employee';
 	import Human from '../../types/Human';
 	import Position from '../../types/Position';
+	import EditPerson from '../People/EditPerson.vue'
 
-	@Component({})
+
+	@Component({
+		components: {
+			EditPerson
+		}
+	})
 	export default class DetailsEmployee extends Vue {
 		employee: Employee | undefined;
 		people: Human[] = Data_People;
@@ -64,5 +71,4 @@
 		color: #2c3e50;
 		margin-top: 60px;
 	}
-
 </style>

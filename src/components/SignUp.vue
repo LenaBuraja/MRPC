@@ -1,10 +1,12 @@
 <template>
-  <div id="login">
+  <div id="signin">
     <div>Login</div>
 		<input type="text" v-model="userName" />
 		<input :type="passwordFieldType ? 'text' : 'password'" v-model="password" />
-  	<button @click="switchVisibility">show / hide</button>
-		<button @click="login">Login</button>
+  		<button @click="switchVisibility">show / hide</button>
+		<input :type="repeatPasswordFieldType ? 'text' : 'password'" v-model="repeatPassword" />
+  		<button @click="switchVisibility1">show / hide</button>
+		<button @click="registration">Login</button>
 	</div>
 </template>
 
@@ -13,30 +15,38 @@
 	import Component from 'vue-class-component'
 
 	@Component({})
-	export default class Login extends Vue {
+	export default class SignUp extends Vue {
 		userName: string = '';
 		password: string = '';
+		repeatPassword: string = '';
 		passwordFieldType: boolean = false;
+		repeatPasswordFieldType: boolean = false;
 
 		setUserName(event: any) {
-      this.userName = event.target.value;
-    }
+     		this.userName = event.target.value;
+     	}
 		setPassword(event: any) {
-      this.password = event.target.value;
-    }
-		login() {
+   			this.password = event.target.value;
+   		}
+		registration() {
 			console.log(this.userName)
 			console.log(this.password)
+			console.log(this.repeatPassword)
 		}
 		switchVisibility() {
 			console.log(this.passwordFieldType)
-      this.passwordFieldType = !this.passwordFieldType
-    }
+   			this.passwordFieldType = !this.passwordFieldType
+   		}
+		switchVisibility1() {
+			console.log(this.repeatPasswordFieldType)
+   			this.repeatPasswordFieldType = !this.repeatPasswordFieldType
+   		}
+		   
 	}
 </script>
 
 <style>
-	#login {
+	#signin {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
