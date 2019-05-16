@@ -1,43 +1,58 @@
 <template>
 	<div>
-		<button id="show-modal" @click="showModal = true">Show Modal</button>
+		<button id="show-modal" @click="showModal = true">Edit candidate</button>
 
 		<modal v-if="showModal" @close="showModal = false" class="modal-mask">
 			<div class="modal-container">
 				<div class="modal-header">custom header</div>
 				<div>custom header</div>
 
-	<div id='addPerson'>
-		<div>new pesron in database</div>
-		<div>
-			<div>Firs name</div>
-			<input type="text" v-on:input="setFirstName" />
-		</div>
-		<div>
-			<div>Last name</div>
-			<input type="text" v-on:input="setLastName" />
-		</div>
-		<div>
-			<div>Middle name</div>
-			<input type="text" v-on:input="setMiddleName" />
-		</div>
-		<div>
-			<div>Phone</div>
-			<input type="text" v-on:input="setPhone" />
-		</div>
-		<div>
-			<div>Email</div>
-			<input type="text" v-on:input="setEmail" />
-		</div>
-		<div>
-			<div>Position</div>
-			<select v-model="position" @change="onChange($event.target.value)">
-				<option v-for="pos in positions" :value="pos" :key="pos.id">{{pos.titlePosition}}</option>
-			</select>
-			<div>{{position}}</div>
-			<button @click="save">Edit</button>
-		</div>
-	</div>
+					<div id='editeCandidate'>
+						<div>edit candidate in database</div>
+							<div>Status</div>
+							<div>{{getStatusCandidate(candidate.statusId).titleStatus}}</div>
+							<button @click="nextStatus">next status: {{getStatusCandidate(candidate.statusId + 1).titleStatus}}</button>
+						<div v-if="candidate.statusId === 0">
+							<div>HR</div>
+							<input type="text" v-on:input="setEmployId" />
+						</div>
+						<div v-if="candidate.statusId === 2">
+							<div>TechnicalSpecial</div>
+							<input type="text" v-on:input="setTechnicalSpecial" />
+						</div>
+						<div v-if="candidate.statusId === 0">
+							<div>Connection</div>
+							<input type="text" v-on:input="setConnectionId" />
+						</div>
+						<div v-if="candidate.statusId === 0">
+							<div>Coming</div>
+							<input type="text" v-on:input="setcommingId" />
+						</div>
+						<div v-if="candidate.statusId === 3">
+							<div>Date interview</div>
+							<input type="text" v-on:input="setdateInterview" />
+						</div>
+						<div v-if="candidate.statusId === 1">
+							<div>FileCV</div>
+							<input type="text" v-on:input="setTitleFileCV" />
+						</div>
+						<div v-if="candidate.statusId === 2">
+							<div>FileWS</div>
+							<input type="text" v-on:input="setTitleFileWS" />
+						</div>
+						<div v-if="candidate.statusId === 2">
+							<div>FileT</div>
+							<input type="text" v-on:input="setTitleFileT" />
+						</div>
+						<div>
+							<div>Answer</div>
+							<input type="text" v-on:input="setAnswerId" />
+						</div>
+						<div>
+							<button @click="save">Edit</button>
+						</div>
+					</div>
+
 				</div>
 		</modal>
 </div>
@@ -54,19 +69,22 @@
 	import Position from '../../types/Position';
 	import Human from '../../types/Human';
 	import Candidate from '../../types/Candidate';
+	import Status from '../../types/Status';
 
 	@Component({})
 	export default class EditCandidate extends Vue {
 		@State(state => state.candidateState.currCandidate) candidate!: Candidate
+		@Getter getStatusCandidate!: (id: number) => Status;
 
 		@State(state => state.dataBase.positions) positions!: Position[];
 		position: Position = new Position(0, '');
 		showModal: boolean = false
 
 		created() {
+			this.getStatusCandidate(this.candidate.statusId);
 		}
 
-		onChange(event: any) {
+		onChangePosition(event: any) {
 			const newPosition = this.positions.find(pos => pos.titlePosition === event.value);
 			this.position = newPosition === undefined ? this.position : newPosition;
 		}
@@ -76,8 +94,8 @@
 		setTechnicalSpecial(event: any) {
 			this.candidate.TechnicalSpecial = event.target.value;
 		}
-		setstatusId(event: any) {
-			this.candidate.statusId = event.target.value;
+		nextStatus() {
+			this.candidate.statusId = this.candidate.statusId++;
 		}
 		setConnectionId(event: any) {
 			this.candidate.ConnectionId = event.target.value;
@@ -87,9 +105,6 @@
 		}
 		setdateInterview(event: any) {
 			this.candidate.commingId = event.target.value;
-		}
-		setdecisionTime(event: any) {
-			this.candidate.decisionTime = event.target.value;
 		}
 		setAnswerId(event: any) {
 			this.candidate.AnswerId = event.target.value;

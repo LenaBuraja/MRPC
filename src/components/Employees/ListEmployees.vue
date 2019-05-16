@@ -1,15 +1,17 @@
 <template>
   <div id="employees">
     <div>Employees</div>
-	<div class="data" v-for="employee in employees" v-bind:key="employee.id">
-		<div>{{ employee.id }}</div>
-		<div>{{ people.find(human => human.id === employee.personId).lastName }} {{ people.find(human => human.id === employee.personId).firstName }} {{ people.find(human => human.id === employee.personId).MiddleName }}</div>
-		<div>{{ positions.find(position => position.id === people.find(human => human.id === employee.personId).positionsID).titlePosition }}</div>
-		<div>{{ people.find(human => human.id === employee.personId).email }}</div>
-		<div>{{ people.find(human => human.id === employee.personId).experience }}</div>
-		<div>{{ people.find(human => human.id === employee.personId).pay }}</div>
-		<div>{{ employee.dateEnrollment }}</div>
-	</div>
+		<div class="data" v-for="employee in employees" v-bind:key="employee.id">
+			<router-link :to="`/DetailsEmployee/${employee.id}`"><img src="../../assets/img/view.jpg" /></router-link>
+			<EditPerson :calledFromList="true"/>
+			<div>{{ employee.id }}</div>
+			<div>{{ people.find(human => human.id === employee.personId).lastName }} {{ people.find(human => human.id === employee.personId).firstName }} {{ people.find(human => human.id === employee.personId).MiddleName }}</div>
+			<div>{{ positions.find(position => position.id === people.find(human => human.id === employee.personId).positionsID).titlePosition }}</div>
+			<div>{{ people.find(human => human.id === employee.personId).email }}</div>
+			<div>{{ people.find(human => human.id === employee.personId).experience }}</div>
+			<div>{{ people.find(human => human.id === employee.personId).pay }}</div>
+			<div>{{ employee.dateEnrollment }}</div>
+		</div>
   </div>
 </template>
 
@@ -24,8 +26,11 @@
 	import Employee from '../../types/Employee';
 	import Position from '../../types/Position';
 	import Human from 'src/types/Human';
+	import EditPerson from '../People/EditPerson.vue'
 
-	@Component({})
+	@Component({
+		components: { EditPerson}
+	})
 	export default class ListEmployees extends Vue {
 		@State(state => state.dataBase.employees) employees!: Employee[];
 		@State(state => state.dataBase.people) people!: Human[];

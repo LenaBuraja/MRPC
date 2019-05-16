@@ -29,6 +29,10 @@ const getters: GetterTree<RootState, RootState> = {
 
 	getUserById: (state: RootState, getters) => (id: number) => {
 		return state.dataBase.users.find(item => item.id === id);
+	},
+
+	getStatusCandidate: (state: RootState, getters) => (id: number) => {
+		return state.dataBase.statuses.find(item => item.id === id);
 	}
 };
 

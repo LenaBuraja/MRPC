@@ -1,43 +1,44 @@
 <template>
 <div>
-		<button id="show-modal" @click="showModal = true">Show Modal</button>
+		<button v-if="!calledFromList" id="show-modal" @click="showModal = true">Show Modal</button>
+		<div v-if="calledFromList"><img src="../../assets/img/edit.png" @click="showModal = true" /></div>
 
 		<modal v-if="showModal" @close="showModal = false" class="modal-mask">
 			<div class="modal-container">
 				<div class="modal-header">custom header</div>
 				<div>custom header</div>
 
-	<div id='addPerson'>
-		<div>new pesron in database</div>
-		<div>
-			<div>Firs name</div>
-			<input type="text" v-on:input="setFirstName" />
-		</div>
-		<div>
-			<div>Last name</div>
-			<input type="text" v-on:input="setLastName" />
-		</div>
-		<div>
-			<div>Middle name</div>
-			<input type="text" v-on:input="setMiddleName" />
-		</div>
-		<div>
-			<div>Phone</div>
-			<input type="text" v-on:input="setPhone" />
-		</div>
-		<div>
-			<div>Email</div>
-			<input type="text" v-on:input="setEmail" />
-		</div>
-		<div>
-			<div>Position</div>
-			<select v-model="position" @change="onChange($event.target.value)">
-				<option v-for="pos in positions" :value="pos" :key="pos.id">{{pos.titlePosition}}</option>
-			</select>
-			<div>{{position}}</div>
-			<button @click="save">Edit</button>
-		</div>
-	</div>
+					<div id='addPerson'>
+						<div>edit pesron in database</div>
+						<div>
+							<div>Firs name</div>
+							<input type="text" v-on:input="setFirstName" />
+						</div>
+						<div>
+							<div>Last name</div>
+							<input type="text" v-on:input="setLastName" />
+						</div>
+						<div>
+							<div>Middle name</div>
+							<input type="text" v-on:input="setMiddleName" />
+						</div>
+						<div>
+							<div>Phone</div>
+							<input type="text" v-on:input="setPhone" />
+						</div>
+						<div>
+							<div>Email</div>
+							<input type="text" v-on:input="setEmail" />
+						</div>
+						<div>
+							<div>Position</div>
+							<select v-model="position" @change="onChange($event.target.value)">
+								<option v-for="pos in positions" :value="pos" :key="pos.id">{{pos.titlePosition}}</option>
+							</select>
+							<div>{{position}}</div>
+							<button @click="save">Edit</button>
+						</div>
+					</div>
 				</div>
 		</modal>
 </div>
@@ -56,6 +57,7 @@
 
 	@Component({})
 	export default class EditPerson extends Vue {
+		@Prop(Boolean) readonly calledFromList!: boolean;
 		showModal: boolean = false
 		lastName: string = ''
 		firstName: string = ''

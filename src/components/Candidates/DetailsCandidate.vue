@@ -2,7 +2,8 @@
 	<div id='detailsCandidate'>
 		{{getCandidate()}}
 		<div>Details candidate {{ $route.params.id }}</div>
-		<EditPerson />
+		<EditPerson :calledFromList="false"/>
+		<EditCandidate />
 		<button @click="auth_me">Auth/me</button>
 		<div v-if="candidate" class="details">
 			<div>
@@ -41,6 +42,7 @@
 
 	import {Data_Candidates} from '../../data/candidates';
 	import Comments from './Comments.vue'
+	import EditCandidate from './EditCandidate.vue'
 	import EditPerson from '../People/EditPerson.vue'
 
 	import Candidate from '../../types/Candidate';
@@ -54,7 +56,7 @@
 	import API from '../../api'
 
 	@Component({
-		components: {Comments, EditPerson}
+		components: {Comments, EditPerson, EditCandidate}
 	})
 	export default class DetailsCandidate extends Vue {
 		@State(state => state.dataBase.candidates) candidates!: Candidate[];
@@ -68,12 +70,18 @@
 		showModal: boolean = false;
 		candidate?: Candidate;
 
+		beforeCreate() {
+			this.$store.dispatch('setCandidate', this.candidate);
+		}
+
 		@Watch('$route.params.id') onCandidateChanged(value: string, oldValue: string) {
+			this.$store.dispatch('setCandidate', Data_Candidates.find(item => item.id === Number(value)));
 			return this.candidate = Data_Candidates.find(item => item.id === Number(value));
 		}
 
 		getCandidate() {
 			this.candidate = Data_Candidates.find(item => item.id === Number(this.$route.params.id));
+			this.$store.dispatch('setCandidate', this.candidate);
 		}
 
 		getFullName(id: number) {

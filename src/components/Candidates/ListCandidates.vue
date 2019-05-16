@@ -2,6 +2,8 @@
   <div id="candidates">
   	<div>Candidates</div>
 		<div class="data" v-for="candidate in candidates" v-bind:key="candidate.id">
+			<router-link :to="`/DetailsCandidate/${candidate.id}`"><img src="../../assets/img/view.jpg" /></router-link>
+			<EditPerson :calledFromList="true"/>
 			<div>{{ candidate.id }}</div>
 			<div>{{ getFullName(candidate.personId) }}</div>
 			<div>{{ getFullName(candidate.employId) }}</div>
@@ -26,8 +28,11 @@
 	import Status from '../../types/Status';
 	import Position from '../../types/Position';
 	import Answer from '../../types/Answer';
+	import EditPerson from '../People/EditPerson.vue'
 
-	@Component({})
+	@Component({
+		components: { EditPerson}
+	})
 	export default class ListCandidates extends Vue {
 		@State(state => state.dataBase.candidates) candidates!: Candidate[];
 		@State(state => state.dataBase.statuses) statuses!: Status[];
@@ -57,5 +62,10 @@
 
 	.data {
 		display: flex;
+	}
+
+	img {
+		width: 30px;
+		height: 30px;
 	}
 </style>
