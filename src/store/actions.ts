@@ -13,7 +13,7 @@ const actions = <ActionTree<RootState, any>> {
 		store.commit('setPerson', person);
 	},
 	setCandidate(store: ActionContext<RootState, any>, candidate: Candidate): void {
-		console.log('actions');
+		console.log('actions setCandidate');
 		store.commit('setCandidate', candidate);
 	},
 	setEmployee(store: ActionContext<RootState, any>, employee: Employee): void {

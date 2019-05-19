@@ -1,20 +1,35 @@
 <template>
   <div id="candidates">
   	<div>Candidates</div>
-		<div class="data" v-for="candidate in candidates" v-bind:key="candidate.id">
-			<router-link :to="`/DetailsCandidate/${candidate.id}`"><img src="../../assets/img/view.jpg" /></router-link>
-			<EditPerson :calledFromList="true"/>
-			<div>{{ candidate.id }}</div>
-			<div>{{ getFullName(candidate.personId) }}</div>
-			<div>{{ getFullName(candidate.employId) }}</div>
-			<div>{{ getFullName(candidate.TechnicalSpecial) }}</div>
-			<div>{{ statuses.find(status => status.id === candidate.statusId).titleStatus }}</div>
-			<div>{{ positions.find(position => position.id === getHuman(candidate.personId).positionsID).titlePosition }}</div>
-			<div>{{ getHuman(candidate.personId).email }}</div>
-			<div>{{ getHuman(candidate.personId).experience }}</div>
-			<div>{{ getHuman(candidate.personId).pay }}</div>
-			<div>{{ candidate.AnswerId ? answers.find(answer => answer.id === candidate.AnswerId).titleAnswer : '' }}</div>
-		</div>
+		<table width="100%">
+			<tr>
+				<th></th>
+				<th>ФИО кандадата</th>
+				<th>ФИО HR</th>
+				<th>ФИО тех. спец.</th>
+				<th>Статус</th>
+				<th>Позиция</th>
+				<th>Email</th>
+				<th>Опыт</th>
+				<th>З/П</th>
+				<th>Ответ</th>
+			</tr>
+			<tr v-for="candidate in candidates" v-bind:key="candidate.id">
+				<td class="td_links">
+					<router-link :to="`/DetailsCandidate/${candidate.id}`"><img src="../../assets/img/view.jpg" /></router-link>
+					<EditCandidate :calledFromList="true" :id="+candidate.id"/>
+				</td>
+				<td>{{ getFullName(candidate.personId) }}</td>
+				<td>{{ getFullName(candidate.employId) }}</td>
+				<td>{{ getFullName(candidate.TechnicalSpecial) }}</td>
+				<td>{{ statuses.find(status => status.id === candidate.statusId).titleStatus }}</td>
+				<td>{{ positions.find(position => position.id === getHuman(candidate.personId).positionsID).titlePosition }}</td>
+				<td>{{ getHuman(candidate.personId).email }}</td>
+				<td>{{ getHuman(candidate.personId).experience }}</td>
+				<td>{{ getHuman(candidate.personId).pay }}</td>
+				<td>{{ candidate.AnswerId ? answers.find(answer => answer.id === candidate.AnswerId).titleAnswer : '' }}</td>
+			</tr>
+		</table>
 	</div>
 </template>
 
@@ -28,10 +43,10 @@
 	import Status from '../../types/Status';
 	import Position from '../../types/Position';
 	import Answer from '../../types/Answer';
-	import EditPerson from '../People/EditPerson.vue'
+	import EditCandidate from './EditCandidate.vue'
 
 	@Component({
-		components: { EditPerson}
+		components: { EditCandidate}
 	})
 	export default class ListCandidates extends Vue {
 		@State(state => state.dataBase.candidates) candidates!: Candidate[];
@@ -60,7 +75,7 @@
 		margin-top: 60px;
 	}
 
-	.data {
+	.td_links {
 		display: flex;
 	}
 

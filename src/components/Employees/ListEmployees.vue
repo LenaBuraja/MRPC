@@ -1,18 +1,30 @@
 <template>
   <div id="employees">
     <div>Employees</div>
-		<div class="data" v-for="employee in employees" v-bind:key="employee.id">
+		<table width="100%">
+			<tr>
+				<th></th>
+				<th>ФИО сотрудника</th>
+				<th>Позиция</th>
+				<th>Email</th>
+				<th>Опыт</th>
+				<th>З/П</th>
+				<th>Дата принятия</th>
+			</tr>
+			<tr v-for="employee in employees" v-bind:key="employee.id">
+				<td class="td_links">
 			<router-link :to="`/DetailsEmployee/${employee.id}`"><img src="../../assets/img/view.jpg" /></router-link>
-			<EditPerson :calledFromList="true"/>
-			<div>{{ employee.id }}</div>
-			<div>{{ people.find(human => human.id === employee.personId).lastName }} {{ people.find(human => human.id === employee.personId).firstName }} {{ people.find(human => human.id === employee.personId).MiddleName }}</div>
-			<div>{{ positions.find(position => position.id === people.find(human => human.id === employee.personId).positionsID).titlePosition }}</div>
-			<div>{{ people.find(human => human.id === employee.personId).email }}</div>
-			<div>{{ people.find(human => human.id === employee.personId).experience }}</div>
-			<div>{{ people.find(human => human.id === employee.personId).pay }}</div>
-			<div>{{ employee.dateEnrollment }}</div>
-		</div>
-  </div>
+			<EditEmployee :calledFromList="true" :id="employee.id"/>
+				</td>
+				<td>{{ people.find(human => human.id === employee.personId).lastName }} {{ people.find(human => human.id === employee.personId).firstName }} {{ people.find(human => human.id === employee.personId).MiddleName }}</td>
+				<td>{{ positions.find(position => position.id === people.find(human => human.id === employee.personId).positionsID).titlePosition }}</td>
+				<td>{{ people.find(human => human.id === employee.personId).email }}</td>
+				<td>{{ people.find(human => human.id === employee.personId).experience }}</td>
+				<td>{{ people.find(human => human.id === employee.personId).pay }}</td>
+				<td>{{ employee.dateEnrollment }}</td>
+			</tr>
+		</table>
+  	</div>
 </template>
 
 <script lang="ts">
@@ -26,10 +38,10 @@
 	import Employee from '../../types/Employee';
 	import Position from '../../types/Position';
 	import Human from 'src/types/Human';
-	import EditPerson from '../People/EditPerson.vue'
+	import EditEmployee from './EditEmployee.vue'
 
 	@Component({
-		components: { EditPerson}
+		components: { EditEmployee}
 	})
 	export default class ListEmployees extends Vue {
 		@State(state => state.dataBase.employees) employees!: Employee[];
@@ -52,12 +64,7 @@
 		margin-top: 60px;
 	}
 
-	.data {
+	.td_links {
 		display: flex;
 	}
-
-	.data > * {
-		margin: 5px;
-		flex-grow: 1;
-}
 </style>

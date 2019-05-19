@@ -12,10 +12,23 @@
 
 <script lang="ts">
 	import Vue from 'vue'
+	import Component from 'vue-class-component'
+	import API from './api'
+	import axios from 'axios'
+	import VueAxios from 'vue-axios'
 
-	export default Vue.extend({
-		name: 'App'
-	})
+	Vue.use(VueAxios, axios)
+
+	@Component({})
+	export default class App extends Vue {
+
+		created() {
+			console.log('created')
+			const res = (new API()).auth_me();
+			console.log(res)
+		}
+
+	}
 </script>
 
 <style>

@@ -1,37 +1,33 @@
 <template>
   <div id="signin">
-    <div>Login</div>
-		<input type="text" v-model="userName" />
+    <div>Set password</div>
 		<input :type="passwordFieldType ? 'text' : 'password'" v-model="password" />
   		<button @click="switchVisibility">show / hide</button>
 		<input :type="repeatPasswordFieldType ? 'text' : 'password'" v-model="repeatPassword" />
   		<button @click="switchVisibility1">show / hide</button>
-		<button @click="registration">Login</button>
+		<button @click="registration">Set password</button>
 	</div>
 </template>
 
 <script lang="ts">
 	import Vue from 'vue';
 	import Component from 'vue-class-component'
+import API from '../api';
 
 	@Component({})
 	export default class SignUp extends Vue {
-		userName: string = '';
 		password: string = '';
 		repeatPassword: string = '';
 		passwordFieldType: boolean = false;
 		repeatPasswordFieldType: boolean = false;
 
-		setUserName(event: any) {
-     		this.userName = event.target.value;
-     	}
 		setPassword(event: any) {
    			this.password = event.target.value;
    		}
 		registration() {
-			console.log(this.userName)
 			console.log(this.password)
 			console.log(this.repeatPassword)
+			const res = (new API()).set_password(this.$route.query.token as string, this.password);
 		}
 		switchVisibility() {
 			console.log(this.passwordFieldType)

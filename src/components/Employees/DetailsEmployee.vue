@@ -2,7 +2,7 @@
 	<div id='detailsEmployee'>
 		{{getEmployee()}}
 		<div>Details employee {{ $route.params.id }}</div>
-		<EditPerson :calledFromList="false"/>
+		<EditPerson :calledFromList="false" :id="employee.id"/>
 		<EditEmployee />
 		<div v-if="employee" class="details">
 			<div>{{getFullName(employee.personId)}}</div>

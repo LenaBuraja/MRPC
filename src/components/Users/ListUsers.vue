@@ -1,17 +1,31 @@
 <template>
   <div id="users">
     <div>Users</div>
-		<div class="data" v-for="user in users" v-bind:key="user.id">
-		<div>{{ user.id }}</div>
-		<div>{{ user.login }}</div>
-		<div>{{ getHuman(user.employeeId).lastName }} {{ getHuman(user.employeeId).firstName }} {{ getHuman(user.employeeId).MiddleName }}</div>
-		<div>{{ positions.find(position => position.id === getHuman(user.employeeId).positionsID).titlePosition }}</div>
-		<div>{{ getHuman(user.employeeId).email }}</div>
-		<div>{{ user.dateRegistration }}</div>
-		<div>{{ getHuman(user.employeeId).experience }}</div>
-		<div>{{ getHuman(user.employeeId).pay }}</div>
+		<table width="100%">
+			<tr>
+				<th></th>
+				<th>Логин</th>
+				<th>ФИО сотрудника</th>
+				<th>Позиция</th>
+				<th>Email</th>
+				<th>Дата регистрации</th>
+				<th>Опыт</th>
+				<th>З/П</th>
+			</tr>
+			<tr v-for="user in users" v-bind:key="user.id">
+				<td class="td_links">
+					<EditCandidate :calledFromList="true" :id="candidate.id"/>
+				</td>
+				<td>{{ user.login }}</td>
+				<td>{{ getHuman(user.employeeId).lastName }} {{ getHuman(user.employeeId).firstName }} {{ getHuman(user.employeeId).MiddleName }}</td>
+				<td>{{ positions.find(position => position.id === getHuman(user.employeeId).positionsID).titlePosition }}</td>
+				<td>{{ getHuman(user.employeeId).email }}</td>
+				<td>{{ user.dateRegistration }}</td>
+				<td>{{ getHuman(user.employeeId).experience }}</td>
+				<td>{{ getHuman(user.employeeId).pay }}</td>
+			</tr>
+		</table>
 	</div>
-  </div>
 </template>
 
 <script lang="ts">

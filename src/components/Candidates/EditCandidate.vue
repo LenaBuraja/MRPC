@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<button id="show-modal" @click="showModal = true">Edit candidate</button>
+		<button v-if="!calledFromList" id="show-modal" @click="showModal = true">Edit candidate</button>
+		<div v-if="calledFromList"><img src="../../assets/img/edit.png" @click="showModal = true" /></div>
 
 		<modal v-if="showModal" @close="showModal = false" class="modal-mask">
 			<div class="modal-container">
@@ -73,7 +74,9 @@
 
 	@Component({})
 	export default class EditCandidate extends Vue {
-		@State(state => state.candidateState.currCandidate) candidate!: Candidate
+		candidate?: Candidate = undefined
+		@Prop(Boolean) readonly calledFromList!: boolean;
+		@Prop(Number) readonly id!: Number;
 		@Getter getStatusCandidate!: (id: number) => Status;
 
 		@State(state => state.dataBase.positions) positions!: Position[];
@@ -81,7 +84,8 @@
 		showModal: boolean = false
 
 		created() {
-			this.getStatusCandidate(this.candidate.statusId);
+			this.candidate = (this.$store.state.dataBase.candidates! as Candidate[]).find(item => item.id === this.id)
+			this.getStatusCandidate(this.candidate!.statusId);
 		}
 
 		onChangePosition(event: any) {
@@ -89,34 +93,34 @@
 			this.position = newPosition === undefined ? this.position : newPosition;
 		}
 		setEmployId(event: any) {
-			this.candidate.employId = event.target.value;
+			this.candidate!.employId = event.target.value;
 		}
 		setTechnicalSpecial(event: any) {
-			this.candidate.TechnicalSpecial = event.target.value;
+			this.candidate!.TechnicalSpecial = event.target.value;
 		}
 		nextStatus() {
-			this.candidate.statusId = this.candidate.statusId++;
+			this.candidate!.statusId = this.candidate!.statusId++;
 		}
 		setConnectionId(event: any) {
-			this.candidate.ConnectionId = event.target.value;
+			this.candidate!.ConnectionId = event.target.value;
 		}
 		setcommingId(event: any) {
-			this.candidate.commingId = event.target.value;
+			this.candidate!.commingId = event.target.value;
 		}
 		setdateInterview(event: any) {
-			this.candidate.commingId = event.target.value;
+			this.candidate!.commingId = event.target.value;
 		}
 		setAnswerId(event: any) {
-			this.candidate.AnswerId = event.target.value;
+			this.candidate!.AnswerId = event.target.value;
 		}
 		setTitleFileCV(event: any) {
-			this.candidate.TitleFileCV = event.target.value;
+			this.candidate!.TitleFileCV = event.target.value;
 		}
 		setTitleFileWS(event: any) {
-			this.candidate.TitleFileWS = event.target.value;
+			this.candidate!.TitleFileWS = event.target.value;
 		}
 		setTitleFileT(event: any) {
-			this.candidate.TitleFileT = event.target.value;
+			this.candidate!.TitleFileT = event.target.value;
 		}
 		
 		setPosition(event: any) {
@@ -128,3 +132,75 @@
 		}
 	}
 </script>
+
+<style>
+.modal-mask {
+		position: fixed;
+		z-index: 9998;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, .5);
+    	display: flex;
+		transition: opacity .3s ease;
+		align-items: center;
+		align-content: center; 
+		justify-content: center; 
+		overflow: auto;  
+	}
+
+	.modal-container {
+		width: 300px;
+		margin: 0px auto;
+		padding: 20px 30px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+		transition: all .3s ease;
+		font-family: Helvetica, Arial, sans-serif;
+		display: block;
+        border: none;
+	}
+
+	.modal-header {
+		margin-top: 0;
+		color: #42b983;
+	}
+</style>
+
+<style>
+.modal-mask {
+		position: fixed;
+		z-index: 9998;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, .5);
+    	display: flex;
+		transition: opacity .3s ease;
+		align-items: center;
+		align-content: center; 
+		justify-content: center; 
+		overflow: auto;  
+	}
+
+	.modal-container {
+		width: 300px;
+		margin: 0px auto;
+		padding: 20px 30px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+		transition: all .3s ease;
+		font-family: Helvetica, Arial, sans-serif;
+		display: block;
+        border: none;
+	}
+
+	.modal-header {
+		margin-top: 0;
+		color: #42b983;
+	}
+</style>

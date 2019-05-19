@@ -3,8 +3,7 @@
 		{{getCandidate()}}
 		<div>Details candidate {{ $route.params.id }}</div>
 		<EditPerson :calledFromList="false"/>
-		<EditCandidate />
-		<button @click="auth_me">Auth/me</button>
+		<EditCandidate :calledFromList="false" :id="candidate.id"/>
 		<div v-if="candidate" class="details">
 			<div>
 				<div>{{getFullName(candidate.personId)}}</div>
@@ -53,8 +52,6 @@
 	import Coming from '../../types/Coming';
 	import Connection from '../../types/Connection';
 
-	import API from '../../api'
-
 	@Component({
 		components: {Comments, EditPerson, EditCandidate}
 	})
@@ -70,7 +67,7 @@
 		showModal: boolean = false;
 		candidate?: Candidate;
 
-		beforeCreate() {
+		created() {
 			this.$store.dispatch('setCandidate', this.candidate);
 		}
 
@@ -94,10 +91,6 @@
 		saveChangeHuman() {
 			
 			this.showModal = false;
-		}
-		auth_me() {
-			const res = (new API()).auth_me();
-			console.log(res)
 		}
 	}
 </script>

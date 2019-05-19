@@ -10,7 +10,7 @@ const mutations = <MutationTree<RootState>> {
         state.personState.currPerson = person;
     },
     setCandidate(state: RootState, candidate: Candidate) {
-		console.log('mutations')
+		console.log('mutations setCandidate')
         state.candidateState.currCandidate = candidate;
     },
     setEmployee(state: RootState, employee: Employee) {
