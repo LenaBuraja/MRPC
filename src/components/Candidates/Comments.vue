@@ -3,15 +3,17 @@
 		<div id='comments'>
 			<div>Comments for candidate {{this.id}}</div>
 			<div class='data' v-for="comment in comments(this.id)" v-bind:key="comment.id">
-				<div>{{ users.find(user => user.id === comment.userId) ? users.find(user => user.id === comment.userId).login : 'пользователь удалён' }}</div>
-				<div class="group">
-					<div>{{ comment.text }}</div>
-					<div>{{ comment.date }}</div>
+				<div :class="{currUser: comment.userId === 1, otherUser: comment.userId !== 1}">
+					<div>{{ users.find(user => user.id === comment.userId) ? users.find(user => user.id === comment.userId).login : 'пользователь удалён' }}</div>
+					<div class="group">
+						<div>{{ comment.text }}</div>
+						<div>{{ comment.date }}</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div>
-			<input type="text" v-model="newComment" />
+			<textarea v-model="newComment" class="inputComment"></textarea>
 			<button @click="sendComment">Send</button>
 		</div>
 	</div>
@@ -48,3 +50,36 @@
 		}
 	}
 </script>
+
+<style>
+	.currUser, .otherUser {
+		margin: 5px;
+	}
+
+	.currUser {
+		color: #703f28;
+		display: flex;
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.otherUser {
+		color: #352870;
+		display: flex;
+		align-items: flex-end;
+		flex-direction: column;
+	}
+
+	.group {
+		width: 480px;
+		border: 0.5px solid #2c3e50;
+		border-radius: 8px;
+		background-color: #c2deec;
+	}
+
+	.inputComment {
+		width: 500px;
+		height: 50px;
+		resize: none;
+	}
+</style>

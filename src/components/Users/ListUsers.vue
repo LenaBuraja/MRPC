@@ -14,7 +14,7 @@
 			</tr>
 			<tr v-for="user in users" v-bind:key="user.id">
 				<td class="td_links">
-					<EditCandidate :calledFromList="true" :id="candidate.id"/>
+					<EditCandidate :calledFromList="true" :id="user.id"/>
 				</td>
 				<td>{{ user.login }}</td>
 				<td>{{ getHuman(user.employeeId).lastName }} {{ getHuman(user.employeeId).firstName }} {{ getHuman(user.employeeId).MiddleName }}</td>

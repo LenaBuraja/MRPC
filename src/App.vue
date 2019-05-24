@@ -39,6 +39,10 @@
 		color: #303030;
 	}
 
+	#app > :not(.navbar) {
+		margin: 10px 32px;
+	}
+
 	.navbar {
 		color: #008fbb;
 		background-color: #303030;

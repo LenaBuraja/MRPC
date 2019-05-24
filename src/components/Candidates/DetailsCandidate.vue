@@ -1,11 +1,11 @@
 <template>
 	<div id='detailsCandidate'>
 		{{getCandidate()}}
-		<div>Details candidate {{ $route.params.id }}</div>
-		<EditPerson :calledFromList="false"/>
-		<EditCandidate :calledFromList="false" :id="candidate.id"/>
 		<div v-if="candidate" class="details">
 			<div>
+				<div>Details candidate {{ $route.params.id }}</div>
+				<EditPerson :calledFromList="false"/>
+				<EditCandidate :calledFromList="false" :id="candidate.id"/>
 				<div>{{getFullName(candidate.personId)}}</div>
 				<div>{{positions.find(position => position.id === getHuman(candidate.personId).positionsID).titlePosition}}</div>
 				<div>{{getHuman(candidate.personId).phone}}</div>
@@ -145,5 +145,19 @@
 	.modal-header {
 		margin-top: 0;
 		color: #42b983;
+	}
+
+	.activeButton {
+		color: #c2deec;
+		background-color: #6199be;
+		border: 1px solid #44434b;
+		border-radius: 8px;
+	}
+	
+	.inactiveButton {
+		color: #c2deec;
+		background-color: #594f57;
+		border: 1px solid #44434b;
+		border-radius: 8px;
 	}
 </style>

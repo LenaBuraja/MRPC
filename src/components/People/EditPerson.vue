@@ -1,6 +1,6 @@
 <template>
 <div>
-		<button v-if="!calledFromList" id="show-modal" @click="showModal = true">Edit person</button>
+		<button class="inactiveButton" v-if="!calledFromList" id="show-modal" @click="showModal = true">Edit person</button>
 		<div v-if="calledFromList"><img src="../../assets/img/edit.png" @click="showModal = true" /></div>
 
 		<modal v-if="showModal" @close="showModal = false" class="modal-mask">
@@ -136,5 +136,20 @@
 	.modal-header {
 		margin-top: 0;
 		color: #42b983;
+	}
+
+	.activeButton {
+		color: #c2deec;
+		background-color: #6199be;
+		border: 1px solid #44434b;
+		border-radius: 8px;
+		cursor: pointer;
+	}
+	
+	.inactiveButton {
+		color: #c2deec;
+		background-color: #594f57;
+		border: 1px solid #44434b;
+		border-radius: 8px;
 	}
 </style>
