@@ -81,5 +81,6 @@
 		width: 500px;
 		height: 50px;
 		resize: none;
+		border-radius: 8px;
 	}
 </style>
